@@ -22,6 +22,7 @@
                 </div>
             </div>
             <div class="section-body">
+                @include('layouts.alert')
                 <div class="row">
                     <div class="col-12">
                         @include('layouts.alert')

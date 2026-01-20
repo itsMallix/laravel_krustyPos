@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Product Create')
+@section('title', 'Add Product')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,7 +16,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Advanced Forms</h1>
+                <h1>Create Product</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Forms</a></div>
@@ -27,10 +27,8 @@
             <div class="section-body">
                 <h2 class="section-title">Product</h2>
 
-
-
                 <div class="card">
-                    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-header">
                             <h4>Input Text</h4>
@@ -44,6 +42,19 @@
                             @enderror"
                                     name="name">
                                 @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text"
+                                    class="form-control @error('description')
+                                is-invalid
+                            @enderror"
+                                    name="description">
+                                @error('description')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -102,7 +113,36 @@
                                     </div>
                                 @enderror
                             </div>
+                            
+                            <div class="form-group mb-0">
+                                <label class="form-label w-100">Status</label>
+                                <div class="selectgroup selectgroup-pills">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="status" value="1" class="selectgroup-input" checked>
+                                        <span class="selectgroup-button">Active</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="status" value="0" class="selectgroup-input" checked>
+                                        <span class="selectgroup-button">Inactive</span>
+                                    </label>
+                                </div>
+                            </div>
 
+                            <div class="form-group mb-0">
+                                <label class="form-label w-100">Is Favorite</label>
+                                <div class="selectgroup selectgroup-pills">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="is_favorite" value="1" class="selectgroup-input" checked>
+                                        <span class="selectgroup-button">Yes</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="is_favorite" value="0 " class="selectgroup-input" checked>
+                                        <span class="selectgroup-button">No</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            
 
                         </div>
                         <div class="card-footer text-right">
