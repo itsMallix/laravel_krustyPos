@@ -22,6 +22,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'description' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -31,8 +32,8 @@ class CategoryController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $image->storeAs('public/categories', $image->getClientOriginalName());
-            $category->image = 'storage/categories/' . $image->getClientOriginalName();
+            $image->storeAs('public/categories', $category->id . '-' . $image->getClientOriginalExtension());
+            $category->image = 'storage/categories/' . $category->id . '-' . $image->getClientOriginalExtension();
             $category->save();
         }
 
@@ -51,17 +52,18 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $category = Category::findOrFail($id);
         $category->name = $request->name;
         $category->description = $request->description;
+
         
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $image->storeAs('public/categories', $image->getClientOriginalName());
-            $data['image'] = 'storage/categories/' . $image->getClientOriginalName();
+            $image->storeAs('public/categories', $category->id . '.' . $image->getClientOriginalExtension());
+            $category->image = 'storage/categories/' . $category->id . '.' . $image->getClientOriginalExtension();
             $category->save();
         }
 
