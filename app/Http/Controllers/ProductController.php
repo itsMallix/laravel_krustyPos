@@ -44,10 +44,13 @@ class ProductController extends Controller
         $product->save();
 
         if ($request->hasFile('image')){
-            $image = $request->file('image');
-            $image->storeAs('public/products', $product->id . '.' . $image->getClientOriginalExtension());
-            $product->image = 'storage/products/' . $product->id . '.' . $image->getClientOriginalExtension();
-            $product->save();
+        $image = $request->file('image');
+        $filename = $product->id . '.' . $image->getClientOriginalExtension();
+        
+        $image->storeAs('products', $filename, 'public');
+        
+        $product->image = 'storage/products/' . $filename;
+        $product->save();
         }
         
         return redirect()->route('products.index')->with('success', 'Product created successfully');
@@ -55,8 +58,9 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-        return view('pages.products.show', compact('product'));
+        // $product = Product::findOrFail($id);
+        // return view('pages.products.show', compact('product'));
+        return view('pages.products.show');
     }
 
     public function edit($id)
@@ -89,11 +93,14 @@ class ProductController extends Controller
         $product->save();
 
         if ($request->hasFile('image')){
-            $image = $request->file('image');
-            $image->storeAs('public/products', $product->id . '.' . $image->getClientOriginalExtension());
-            $product->image = 'storage/products/' . $product->id . '.' . $image->getClientOriginalExtension();
-            $product->save();
-        }
+        $image = $request->file('image');
+        $filename = $product->id . '.' . $image->getClientOriginalExtension();
+        
+        $image->storeAs('products', $filename, 'public');
+        
+        $product->image = 'storage/products/' . $filename;
+        $product->save();
+    }
         
         return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }

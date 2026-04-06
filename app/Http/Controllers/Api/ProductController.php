@@ -10,11 +10,12 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product = Product::all();
+        $products = Product::all();
+        $products->load('category');
         // $product = Product::paginate(10);
         return response()->json([
             'status' => 'success',
-            'data' => $product
+            'data' => $products
         ], 200);
     }
 }
